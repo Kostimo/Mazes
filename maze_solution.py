@@ -1,42 +1,48 @@
 import pygame
 import maze_generation
-
-FPS = 10
-TILE = maze_generation.TILE
-cols, rows = maze_generation.cols, maze_generation.rows
-WIDTH, HEIGHT = TILE*cols+2, TILE*rows+2
-
-# Colors rgb
-C1 = (142, 107, 115)
-C2 = (215, 221, 234)
-C3 = (148, 158, 187)
-C4 = (43, 44, 62)
-C5 = (19, 19, 23)
+from drawing_maze import *
+from maze_const import *
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 
-with open("saved_maze.txt") as file:
-    maze = file.read().split()
+def solve(maze):
+    current_cell = maze[0]
+    start_cell = current_cell
+    final_cell = maze[-1]
 
-grid = maze_generation.grid
-k=0
-for cell in grid:
-    cell.walls = maze[k]
-    k+=1
+    stack = []
+    RUN = True
+    while RUN:
+        clock.tick(FPS)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                RUN = False
 
-RUN = True
-while RUN:
-    clock.tick(FPS)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+        screen.fill(C3)
+        pygame.draw.rect(screen, C6, final_cell.rect)
+        [cell.draw() for cell in maze]
+        current_cell.draw_current_cell()
+            
+        next_cell = current_cell.solution_check_neighbors(maze)
+        if next_cell:
+            stack.append(current_cell)
+            current_cell.first_solution_visit = True
+            current_cell = next_cell
+        elif stack:
+            current_cell.second_solution_visit = True
+            current_cell = stack.pop()
+
+        pygame.display.flip()
+
+        if current_cell is final_cell:
+            print("SUCCESS!")
+            WAIT = True
+            while WAIT:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        WAIT = False
             RUN = False
-
-    screen.fill(C3)
-    [cell.draw() for cell in grid]
-
-    pygame.display.flip()
-pygame.quit()
-
-
+            
+    pygame.quit()

@@ -1,6 +1,5 @@
 import random
 import pygame
-from drawing_maze import *
 from maze_const import *
 
 class Cell(pygame.sprite.Sprite):
@@ -105,7 +104,7 @@ class Cell(pygame.sprite.Sprite):
         if self.first_solution_visit:
             pygame.draw.rect(self.surface, C7, self.rect)
         if self.second_solution_visit:
-            pygame.draw.rect(self.surface, C8, self.rect)
+            pygame.draw.rect(self.surface, C4, self.rect)
         if isinstance(self.walls, dict):
             if self.walls["top"]:
                 pygame.draw.line(self.surface, C5, (x, y), (x + self.tile, y), 2)

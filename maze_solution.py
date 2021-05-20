@@ -1,13 +1,12 @@
 import pygame
-import maze_generation
-from drawing_maze import *
 from maze_const import *
 
-pygame.init()
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-clock = pygame.time.Clock()
-
 def solve(maze):
+    pygame.init()
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption("solution")
+    clock = pygame.time.Clock()
+
     current_cell = maze[0]
     start_cell = current_cell
     final_cell = maze[-1]
@@ -43,6 +42,9 @@ def solve(maze):
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         WAIT = False
+                    elif event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_RETUTN:
+                            WAIT = False
             RUN = False
             
     pygame.quit()

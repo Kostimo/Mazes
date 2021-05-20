@@ -1,7 +1,5 @@
-import pygame
 import maze_generation
 import maze_solution
-import drawing_maze
 from maze_const import *
 
 try:

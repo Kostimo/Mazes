@@ -2,11 +2,11 @@
 import pygame
 import maze_objects
 import saving_maze
-from drawing_maze import *
 from maze_const import *
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("generation")
 clock = pygame.time.Clock()
 
 grid = [maze_objects.Cell(j, i, TILE, screen) for i in range(rows) for j in range(cols)]
